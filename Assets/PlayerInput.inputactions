@@ -1,0 +1,34 @@
+{
+    "name": "PlayerInput",
+    "maps": [
+        {
+            "name": "BodyControls",
+            "id": "08daf1fd-595f-43d2-b314-02a6a05a5334",
+            "actions": [
+                {
+                    "name": "BodyPartMove_mouse",
+                    "type": "Value",
+                    "id": "bd254f9e-114f-47ba-ac11-8d2e0e720c78",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ce2ad67d-8ece-4afb-95c0-7659a43fdce7",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BodyPartMove_mouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

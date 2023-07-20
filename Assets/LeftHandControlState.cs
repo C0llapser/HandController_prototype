@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LeftHandControlState : MonoBehaviour
+public class LeftHandControlState : BodyBaseControlState
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void EnterState(BodyStateManager bodyStateManager)
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void UptadeState(float mouseX, float mouseY)
     {
-        
+
     }
 }
+

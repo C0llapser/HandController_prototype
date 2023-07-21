@@ -18,10 +18,7 @@ public class HeadControlState : BodyBaseControlState
     public override void EnterState(BodyStateManager bodyStateManager) 
     {
         this.cameraTransfrom = bodyStateManager.cameraTransform;
-        cameraTransfrom.rotation = Quaternion.identity;
         inputSettings = bodyStateManager.inputSettings;
-        camVertical = 0;
-        camHorizontal = 0;
         camHorizontalClamp = inputSettings.cameraHorizontalClamp;
         camVerticalClamp = inputSettings.cameraVerticalClamp;
         

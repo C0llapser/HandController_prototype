@@ -7,10 +7,12 @@ using UnityEngine.InputSystem;
 public class InputController : MonoBehaviour
 {
 
-    PlayerControls controls;
+    private PlayerControls controls;
     
     [SerializeField]
-    UnityEvent<float, float> onMouseDeltaEvent;
+    private UnityEvent<float, float> onMouseDeltaEvent;
+    [SerializeField]
+    private UnityEvent onRightHandOnOFF;
     
     private void Awake()
     {
@@ -21,24 +23,24 @@ public class InputController : MonoBehaviour
     {
         controls.Player.Enable();
         controls.Player.MouseDelta.performed += MouseDelta;
-        controls.Player.RightHandOnOff.performed += RightHandOnOff;
+        controls.Player.RightHandOnOff.performed += ctx =>RightHandOnOff();
     }
 
     private void OnDisable()
     {
         controls.Player.Disable();
         controls.Player.MouseDelta.performed -= MouseDelta;
-        controls.Player.RightHandOnOff.performed -= RightHandOnOff;
+        controls.Player.RightHandOnOff.performed -= ctx => RightHandOnOff();
     }
 
-    public void RightHandOnOff(InputAction.CallbackContext context)
+    public void RightHandOnOff()
     {
-        Debug.Log("gowno");
+        onRightHandOnOFF?.Invoke();
     }
 
     public void MouseDelta(InputAction.CallbackContext context)
     {
         Vector2 value = context.ReadValue<Vector2>();
-        onMouseDeltaEvent.Invoke(value.x, value.y);
+        onMouseDeltaEvent?.Invoke(value.x, value.y);
     }
 }

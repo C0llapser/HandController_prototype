@@ -16,10 +16,12 @@ public class BodyStateManager : MonoBehaviour
     public Transform cameraTransform;
     public InputSettings inputSettings;
 
-    public Transform RightHandTarget;
-    public Transform RightHandOrigin;
-    public Transform LeftHandTarget;
-    public Transform LeftHandOrigin;
+    public Transform rightHandTarget;
+    public Transform rightHandOrigin;
+    public bool rightStateOn;
+
+    public Transform leftHandTarget;
+    public Transform leftHandOrigin;
 
     private void Awake()
     {
@@ -28,15 +30,31 @@ public class BodyStateManager : MonoBehaviour
 
     private void Start()
     {
-        currentState = headState;
-        currentState.EnterState(this);
+        switchState(headState);
     }
-
 
     public void currentStateUptade(float x, float y)
     {
         currentState.UptadeState(x, y);
     }
-    
 
+    public void enterRightHandState()
+    {
+        if (rightStateOn)
+        {
+            rightStateOn = false;
+            switchState(headState);
+        }
+        else
+        {
+            switchState(rightHandState);
+        }
+    }
+
+
+    private void switchState(BodyBaseControlState bodyBaseState)
+    {
+        currentState = bodyBaseState;
+        currentState.EnterState(this);
+    }
 }

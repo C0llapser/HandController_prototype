@@ -12,9 +12,9 @@ public class RightHandControlState : BodyBaseControlState
 
     public override void EnterState(BodyStateManager bodyStateManager)
     {
-        originPosition = bodyStateManager.RightHandOrigin;
-        handTarget = bodyStateManager.RightHandTarget;
-
+        originPosition = bodyStateManager.rightHandOrigin;
+        handTarget = bodyStateManager.rightHandTarget;
+        bodyStateManager.rightStateOn = true;
     }
 
     public override void UptadeState(float mouseX, float mouseY)

@@ -278,10 +278,11 @@ MonoBehaviour:
   mouseX: 0
   cameraTransform: {fileID: 963194228}
   inputSettings: {fileID: 0}
-  RightHandTarget: {fileID: 0}
-  RightHandOrigin: {fileID: 0}
-  LeftHandTarget: {fileID: 0}
-  LeftHandOrigin: {fileID: 0}
+  rightHandTarget: {fileID: 1345979279}
+  rightHandOrigin: {fileID: 1747420708}
+  rightStateOn: 0
+  leftHandTarget: {fileID: 0}
+  leftHandOrigin: {fileID: 0}
 --- !u!4 &174619633
 Transform:
   m_ObjectHideFlags: 0
@@ -316,6 +317,21 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: BodyStateManager, Assembly-CSharp
         m_MethodName: currentStateUptade
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onRightHandOnOFF:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 174619632}
+        m_TargetAssemblyTypeName: BodyStateManager, Assembly-CSharp
+        m_MethodName: enterRightHandState
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -762,7 +778,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1056379648}
-  - component: {fileID: 1056379647}
   m_Layer: 0
   m_Name: HandsController
   m_TagString: Untagged
@@ -770,21 +785,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1056379647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1056379646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39f73308d24058247a7f872c900efc8a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mouseSensitivityX: 100
-  mouseSensitivityY: 100
-  handTransformObject: {fileID: 1345979279}
 --- !u!4 &1056379648
 Transform:
   m_ObjectHideFlags: 0
@@ -1402,6 +1402,37 @@ MonoBehaviour:
   springStiffness: 700
   damperStiffness: 1000
   wheelRadius: 0.7
+--- !u!1 &1747420707
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1747420708}
+  m_Layer: 0
+  m_Name: origin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1747420708
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747420707}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1998380747}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1818554676 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8c497065cee858d47ba0e682a07ba88e, type: 3}
@@ -1611,6 +1642,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1345979279}
+  - {fileID: 1747420708}
   m_Father: {fileID: 1645479628}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

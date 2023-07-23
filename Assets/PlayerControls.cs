@@ -62,6 +62,33 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Hold"",
+                    ""type"": ""Button"",
+                    ""id"": ""1eac062d-a7f2-4903-a911-331b210f46d0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RotateHand"",
+                    ""type"": ""Button"",
+                    ""id"": ""bef9bab9-83eb-4fbd-863a-b409a0b92854"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HandAltitude"",
+                    ""type"": ""Value"",
+                    ""id"": ""9b0da7cc-34a2-4798-bf1a-cb32760a668e"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -97,6 +124,39 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""MouseDelta"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""434a703d-ee3a-4ceb-903d-d3ec632ab063"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Hold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a672a27a-867a-4209-8d06-a32d394119dc"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RotateHand"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""78b95012-72b3-400b-9869-4edfb5c07908"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HandAltitude"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -109,6 +169,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_LeftHandOnOff = m_Player.FindAction("LeftHandOnOff", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_MouseDelta = m_Player.FindAction("MouseDelta", throwIfNotFound: true);
+        m_Player_Hold = m_Player.FindAction("Hold", throwIfNotFound: true);
+        m_Player_RotateHand = m_Player.FindAction("RotateHand", throwIfNotFound: true);
+        m_Player_HandAltitude = m_Player.FindAction("HandAltitude", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -174,6 +237,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_LeftHandOnOff;
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_MouseDelta;
+    private readonly InputAction m_Player_Hold;
+    private readonly InputAction m_Player_RotateHand;
+    private readonly InputAction m_Player_HandAltitude;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -182,6 +248,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @LeftHandOnOff => m_Wrapper.m_Player_LeftHandOnOff;
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @MouseDelta => m_Wrapper.m_Player_MouseDelta;
+        public InputAction @Hold => m_Wrapper.m_Player_Hold;
+        public InputAction @RotateHand => m_Wrapper.m_Player_RotateHand;
+        public InputAction @HandAltitude => m_Wrapper.m_Player_HandAltitude;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -203,6 +272,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @MouseDelta.started += instance.OnMouseDelta;
             @MouseDelta.performed += instance.OnMouseDelta;
             @MouseDelta.canceled += instance.OnMouseDelta;
+            @Hold.started += instance.OnHold;
+            @Hold.performed += instance.OnHold;
+            @Hold.canceled += instance.OnHold;
+            @RotateHand.started += instance.OnRotateHand;
+            @RotateHand.performed += instance.OnRotateHand;
+            @RotateHand.canceled += instance.OnRotateHand;
+            @HandAltitude.started += instance.OnHandAltitude;
+            @HandAltitude.performed += instance.OnHandAltitude;
+            @HandAltitude.canceled += instance.OnHandAltitude;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -219,6 +297,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @MouseDelta.started -= instance.OnMouseDelta;
             @MouseDelta.performed -= instance.OnMouseDelta;
             @MouseDelta.canceled -= instance.OnMouseDelta;
+            @Hold.started -= instance.OnHold;
+            @Hold.performed -= instance.OnHold;
+            @Hold.canceled -= instance.OnHold;
+            @RotateHand.started -= instance.OnRotateHand;
+            @RotateHand.performed -= instance.OnRotateHand;
+            @RotateHand.canceled -= instance.OnRotateHand;
+            @HandAltitude.started -= instance.OnHandAltitude;
+            @HandAltitude.performed -= instance.OnHandAltitude;
+            @HandAltitude.canceled -= instance.OnHandAltitude;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -242,5 +329,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnLeftHandOnOff(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnMouseDelta(InputAction.CallbackContext context);
+        void OnHold(InputAction.CallbackContext context);
+        void OnRotateHand(InputAction.CallbackContext context);
+        void OnHandAltitude(InputAction.CallbackContext context);
     }
 }

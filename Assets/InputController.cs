@@ -13,6 +13,12 @@ public class InputController : MonoBehaviour
     private UnityEvent<float, float> onMouseDeltaEvent;
     [SerializeField]
     private UnityEvent onRightHandOnOFF;
+    [SerializeField]
+    private UnityEvent onHold;
+    [SerializeField]
+    private UnityEvent onRotateHand;
+    [SerializeField]
+    private UnityEvent<float,float> onChangingHeightHand;
     
     private void Awake()
     {
@@ -24,6 +30,11 @@ public class InputController : MonoBehaviour
         controls.Player.Enable();
         controls.Player.MouseDelta.performed += MouseDelta;
         controls.Player.RightHandOnOff.performed += ctx =>RightHandOnOff();
+        controls.Player.Hold.started += Hold;
+        controls.Player.Hold.canceled += Hold;
+        controls.Player.RotateHand.performed += ctx => RotateHand();
+        controls.Player.HandAltitude.performed += ChangeHandAltitude;
+       
     }
 
     private void OnDisable()
@@ -31,6 +42,10 @@ public class InputController : MonoBehaviour
         controls.Player.Disable();
         controls.Player.MouseDelta.performed -= MouseDelta;
         controls.Player.RightHandOnOff.performed -= ctx => RightHandOnOff();
+        controls.Player.Hold.started -= Hold;
+        controls.Player.Hold.canceled += Hold;
+        controls.Player.RotateHand.performed -= ctx => RotateHand();
+        controls.Player.HandAltitude.performed -= ChangeHandAltitude;
     }
 
     public void RightHandOnOff()
@@ -42,5 +57,21 @@ public class InputController : MonoBehaviour
     {
         Vector2 value = context.ReadValue<Vector2>();
         onMouseDeltaEvent?.Invoke(value.x, value.y);
+    }
+
+    public void Hold(InputAction.CallbackContext context)
+    {
+        onHold?.Invoke();
+    }
+
+    public void RotateHand()
+    {
+        onRotateHand?.Invoke();
+    }
+
+    public void ChangeHandAltitude(InputAction.CallbackContext context)
+    {
+        Vector2 value = context.ReadValue<Vector2>();
+        onChangingHeightHand?.Invoke(value.x,value.y);
     }
 }

@@ -281,8 +281,12 @@ MonoBehaviour:
   rightHandTarget: {fileID: 1345979279}
   rightHandOrigin: {fileID: 1747420708}
   rightStateOn: 0
+  rightHandHoldObject: 0
   leftHandTarget: {fileID: 0}
   leftHandOrigin: {fileID: 0}
+  leftStateOn: 0
+  leftHandHoldObject: 0
+  isHolding: 0
 --- !u!4 &174619633
 Transform:
   m_ObjectHideFlags: 0
@@ -340,6 +344,27 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onHold:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 174619632}
+        m_TargetAssemblyTypeName: BodyStateManager, Assembly-CSharp
+        m_MethodName: HoldObject
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onRotateHand:
+    m_PersistentCalls:
+      m_Calls: []
+  onChangingHeightHand:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &174619635
 MonoBehaviour:
   m_ObjectHideFlags: 0

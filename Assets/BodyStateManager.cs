@@ -19,9 +19,14 @@ public class BodyStateManager : MonoBehaviour
     public Transform rightHandTarget;
     public Transform rightHandOrigin;
     public bool rightStateOn;
+    public bool rightHandHoldObject;
 
     public Transform leftHandTarget;
     public Transform leftHandOrigin;
+    public bool leftStateOn;
+    public bool leftHandHoldObject;
+
+    public bool isHolding;
 
     private void Awake()
     {
@@ -30,6 +35,8 @@ public class BodyStateManager : MonoBehaviour
 
     private void Start()
     {
+        rightStateOn = false;
+        leftStateOn = false;
         switchState(headState);
     }
 
@@ -44,13 +51,36 @@ public class BodyStateManager : MonoBehaviour
         {
             rightStateOn = false;
             switchState(headState);
+            
         }
         else
         {
+            rightStateOn = true;
             switchState(rightHandState);
         }
     }
+    public void enterLeftHandState()
+    {
+        if (leftStateOn)
+        {
+            leftStateOn = false;
+            switchState(headState);
+        }
+        else
+        {
+            leftStateOn = true;
+            switchState(leftHandState);
+        }
+    }
 
+    public void HoldObject()
+    {
+        if (!rightStateOn || !leftStateOn)
+            return;
+
+        Debug.Log("trzymam :" + rightHandHoldObject); 
+
+    }
 
     private void switchState(BodyBaseControlState bodyBaseState)
     {

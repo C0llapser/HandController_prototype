@@ -14,7 +14,6 @@ public class RightHandControlState : BodyBaseControlState
     {
         originPosition = bodyStateManager.rightHandOrigin;
         handTarget = bodyStateManager.rightHandTarget;
-        bodyStateManager.rightStateOn = true;
     }
 
     public override void UptadeState(float mouseX, float mouseY)

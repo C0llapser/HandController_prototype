@@ -28,6 +28,8 @@ public class BodyStateManager : MonoBehaviour
 
     public bool isHolding;
 
+    public bool rotateHand;
+
     private void Awake()
     {
         inputSettings = gameObject.GetComponent<InputSettings>();
@@ -37,6 +39,7 @@ public class BodyStateManager : MonoBehaviour
     {
         rightStateOn = false;
         leftStateOn = false;
+        rotateHand = false;
         switchState(headState);
     }
 
@@ -75,11 +78,17 @@ public class BodyStateManager : MonoBehaviour
 
     public void HoldObject()
     {
-        if (!rightStateOn || !leftStateOn)
+        if (!rightStateOn && !leftStateOn)
             return;
 
-        Debug.Log("trzymam :" + rightHandHoldObject); 
+        Debug.Log("trzymaj");
+    }
 
+    public void RotateHand()
+    {
+        rotateHand = rotateHand ? false : true;
+        Debug.Log("State manager" + rotateHand);
+        
     }
 
     private void switchState(BodyBaseControlState bodyBaseState)

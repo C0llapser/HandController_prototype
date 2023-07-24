@@ -32,7 +32,8 @@ public class InputController : MonoBehaviour
         controls.Player.RightHandOnOff.performed += ctx =>RightHandOnOff();
         controls.Player.Hold.started += Hold;
         controls.Player.Hold.canceled += Hold;
-        controls.Player.RotateHand.performed += ctx => RotateHand();
+        controls.Player.RotateHand.started += ctx => RotateHand();
+        controls.Player.RotateHand.canceled += ctx => RotateHand();
         controls.Player.HandAltitude.performed += ChangeHandAltitude;
        
     }
@@ -44,7 +45,8 @@ public class InputController : MonoBehaviour
         controls.Player.RightHandOnOff.performed -= ctx => RightHandOnOff();
         controls.Player.Hold.started -= Hold;
         controls.Player.Hold.canceled += Hold;
-        controls.Player.RotateHand.performed -= ctx => RotateHand();
+        controls.Player.RotateHand.started -= ctx => RotateHand();
+        controls.Player.RotateHand.canceled -= ctx => RotateHand();
         controls.Player.HandAltitude.performed -= ChangeHandAltitude;
     }
 

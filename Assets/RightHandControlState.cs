@@ -2,28 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RightHandControlState : BodyBaseControlState
+public class RightHandControlState : BodyBaseControlState, IHandPart
 {
-    Transform originPosition;
-    Transform handTarget;
-    float positionX;
-    float positionY;
-    float rotationX;
-    float rotationY;
-    public bool rotateHand;
+    private Transform originPosition;
+    private Transform handTarget;
+    private float positionX;
+    private float positionY;
+    private float rotationX;
+    private float rotationY;
+    private bool isRotate;
 
     public override void EnterState(BodyStateManager bodyStateManager)
     {
         originPosition = bodyStateManager.rightHandOrigin;
         handTarget = bodyStateManager.rightHandTarget;
-        rotateHand = bodyStateManager.rotateHand;
     }
 
     public override void UptadeState(float mouseX, float mouseY)
     {
-        Debug.Log(rotateHand);
-        if (!rotateHand)
+        if (!isRotate)
         {
+            if (handTarget.position.x == 0)
+            {
+                Debug.Log("no jest 0");
+            }
             positionX += handTarget.position.x * mouseX * Time.deltaTime;
             positionY += handTarget.position.y * mouseY * Time.deltaTime;
             positionX = Mathf.Clamp(positionX, -6.0f, 4.0f);
@@ -32,16 +34,18 @@ public class RightHandControlState : BodyBaseControlState
             handTarget.transform.localPosition = new Vector3(-positionY, 0, -positionX);
         }
         else
-        { 
-            Debug.Log("UHHHHH");
-            rotationX += handTarget.eulerAngles.z;
-        
+        {
+            Debug.Log("obracam");
+            rotationX += mouseX * 6.0f *  Time.deltaTime;
+            rotationY += mouseY * 6.0f * Time.deltaTime;
+            
+            
+            handTarget.eulerAngles = new Vector3(rotationX,0,rotationY);
         }
     }
 
-
-    public void costamcos()
-    { 
-    
+    public void isHandRotate(bool setIsRotate)
+    {
+        isRotate= setIsRotate;        
     }
 }

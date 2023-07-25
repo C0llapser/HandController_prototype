@@ -5,34 +5,19 @@ using TMPro;
 using UnityEngine.InputSystem;
 
 
-
 public class mouseReader : MonoBehaviour
 {
-    [SerializeField]
-    private TextMeshProUGUI text;
-    
-    void Start()
+    public Transform cube;
+
+    float x;
+    float y;
+    private void Update()
     {
-        
+        Vector2 mouse = Mouse.current.delta.ReadValue();
+        x +=  mouse.x * Time.deltaTime;
+        y +=  mouse.y * Time.deltaTime;
+
+        cube.eulerAngles = new Vector3(x, y, 0);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        text.text = NewInput();
-    }
-
-
-    private string legacyMouseInput()
-    { 
-        Vector3 mousePosition = Input.mousePosition;
-        return mousePosition.ToString();
-    }
-
-    private string NewInput()
-    {
-        Vector2 mousePos = Mouse.current.delta.ReadValue();
-        return mousePos.ToString(); 
-    }
-
 }
+

@@ -86,9 +86,14 @@ public class BodyStateManager : MonoBehaviour
 
     public void RotateHand()
     {
-        rotateHand = rotateHand ? false : true;
-        Debug.Log("State manager" + rotateHand);
+        if (!rightStateOn && !leftStateOn)
+            return;
         
+        rotateHand = rotateHand ? false : true;
+
+        IHandPart hand = currentState as IHandPart;
+        if(hand != null)
+            hand.isHandRotate(rotateHand);
     }
 
     private void switchState(BodyBaseControlState bodyBaseState)

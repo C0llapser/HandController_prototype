@@ -18,7 +18,7 @@ public class InputController : MonoBehaviour
     [SerializeField]
     private UnityEvent onRotateHand;
     [SerializeField]
-    private UnityEvent<float,float> onChangingHeightHand;
+    private UnityEvent<float> onChangingHeightHand;
     
     private void Awake()
     {
@@ -73,7 +73,7 @@ public class InputController : MonoBehaviour
 
     public void ChangeHandAltitude(InputAction.CallbackContext context)
     {
-        Vector2 value = context.ReadValue<Vector2>();
-        onChangingHeightHand?.Invoke(value.x,value.y);
+        float value = context.ReadValue<float>();
+        onChangingHeightHand?.Invoke(value);
     }
 }

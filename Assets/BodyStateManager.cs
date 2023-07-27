@@ -9,6 +9,7 @@ public class BodyStateManager : MonoBehaviour
     public HeadControlState headState = new HeadControlState();
     public RightHandControlState rightHandState = new RightHandControlState();
     public LeftHandControlState leftHandState = new LeftHandControlState();
+    public IHandPart IHandHolder;
 
     public float mouseY;
     public float mouseX;
@@ -50,30 +51,11 @@ public class BodyStateManager : MonoBehaviour
 
     public void enterRightHandState()
     {
-        if (rightStateOn)
-        {
-            rightStateOn = false;
-            switchState(headState);
-            
-        }
-        else
-        {
-            rightStateOn = true;
-            switchState(rightHandState);
-        }
+        enterHandState(rightStateOn, rightHandState);
     }
     public void enterLeftHandState()
     {
-        if (leftStateOn)
-        {
-            leftStateOn = false;
-            switchState(headState);
-        }
-        else
-        {
-            leftStateOn = true;
-            switchState(leftHandState);
-        }
+        enterHandState(leftStateOn, leftHandState);
     }
 
     public void HoldObject()
@@ -91,9 +73,30 @@ public class BodyStateManager : MonoBehaviour
         
         rotateHand = rotateHand ? false : true;
 
-        IHandPart hand = currentState as IHandPart;
-        if(hand != null)
-            hand.isHandRotate(rotateHand);
+        if(IHandHolder != null)
+            IHandHolder.isHandRotate(rotateHand);
+    }
+
+    public void changeHandAltitude(float x)
+    {
+        if (IHandHolder != null)
+            IHandHolder.changeHandAltitude(x);
+    }
+
+    private void enterHandState(bool handStateBool,BodyBaseControlState whichHandState)
+    {
+        if (handStateBool)// exit left hand state and switch to headState
+        {
+            handStateBool = false;
+            switchState(headState);
+            IHandHolder = null;
+        }
+        else// enter "whichHandState" hand state 
+        {
+            handStateBool = true;
+            switchState(whichHandState);
+            IHandHolder = whichHandState as IHandPart;
+        }
     }
 
     private void switchState(BodyBaseControlState bodyBaseState)
@@ -101,4 +104,6 @@ public class BodyStateManager : MonoBehaviour
         currentState = bodyBaseState;
         currentState.EnterState(this);
     }
+    
+
 }

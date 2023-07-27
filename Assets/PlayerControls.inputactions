@@ -63,7 +63,7 @@
                     "name": "HandAltitude",
                     "type": "Value",
                     "id": "9b0da7cc-34a2-4798-bf1a-cb32760a668e",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -128,7 +128,7 @@
                 {
                     "name": "",
                     "id": "78b95012-72b3-400b-9869-4edfb5c07908",
-                    "path": "<Mouse>/scroll",
+                    "path": "<Mouse>/scroll/y",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

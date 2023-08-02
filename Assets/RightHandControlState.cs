@@ -23,16 +23,13 @@ public class RightHandControlState : BodyBaseControlState, IHandPart
     {
         if (!isRotate)
         {
-            if (handTarget.position.x == 0)
-            {
-                Debug.Log("no jest 0");
-            }
-            positionX += handTarget.position.x * mouseX * Time.deltaTime;
-            positionY += handTarget.position.y * mouseY * Time.deltaTime;
-            positionX = Mathf.Clamp(positionX, -6.0f, 4.0f);
-            positionY = Mathf.Clamp(positionY, -3.0f, 3.0f);
+            positionX +=  mouseX * 0.1f * 0.01f;
+            positionY +=  mouseY * 0.3f * 0.01f;
+            
+            //positionX = Mathf.Clamp(positionX, -6.0f, 4.0f);
+            //positionY = Mathf.Clamp(positionY, -3.0f, 3.0f);
 
-            handTarget.transform.position = new Vector3(positionY, positionZ, -positionX);
+            handTarget.transform.localPosition = new Vector3(positionY, 0, -positionX);
         }
         else
         {
@@ -51,9 +48,9 @@ public class RightHandControlState : BodyBaseControlState, IHandPart
 
     public void changeHandAltitude(float value)
     {
-        positionZ += handTarget.position.z * value * Time.deltaTime;
+        //positionZ += handTarget.position.z * value * Time.deltaTime;
 
-        handTarget.transform.position = new Vector3(-positionY,positionZ,-positionX);
+        //handTarget.transform.position = new Vector3(-positionY,positionZ,-positionX);
     }
 
 }

@@ -51,11 +51,11 @@ public class BodyStateManager : MonoBehaviour
 
     public void enterRightHandState()
     {
-        enterHandState(rightStateOn, rightHandState);
+        enterHandState(ref rightStateOn, rightHandState);
     }
     public void enterLeftHandState()
     {
-        enterHandState(leftStateOn, leftHandState);
+        enterHandState(ref leftStateOn, leftHandState);
     }
 
     public void HoldObject()
@@ -83,26 +83,32 @@ public class BodyStateManager : MonoBehaviour
             IHandHolder.changeHandAltitude(x);
     }
 
-    private void enterHandState(bool handStateBool,BodyBaseControlState whichHandState)
+    private void enterHandState(ref bool handStateBool,BodyBaseControlState whichHandState)
     {
+        Debug.Log(handStateBool);
         if (handStateBool)// exit left hand state and switch to headState
         {
+            Debug.Log("ahhh");
             handStateBool = false;
             switchState(headState);
             IHandHolder = null;
         }
         else// enter "whichHandState" hand state 
         {
+            Debug.Log("uhhh");
             handStateBool = true;
             switchState(whichHandState);
             IHandHolder = whichHandState as IHandPart;
         }
+        Debug.Log(handStateBool);
     }
 
     private void switchState(BodyBaseControlState bodyBaseState)
     {
         currentState = bodyBaseState;
         currentState.EnterState(this);
+
+
     }
     
 

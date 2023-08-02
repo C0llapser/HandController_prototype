@@ -9,15 +9,14 @@ public class mouseReader : MonoBehaviour
 {
     public Transform cube;
 
-    float x;
-    float y;
+    Vector2 previousMousePosition;
+    Vector2 mousePosition;
+    Vector2 mouseMovement;
+    
     private void Update()
     {
-        Vector2 mouse = Mouse.current.delta.ReadValue();
-        x +=  mouse.x * Time.deltaTime;
-        y +=  mouse.y * Time.deltaTime;
-
-        cube.eulerAngles = new Vector3(x, y, 0);
+        mousePosition = Mouse.current.position.ReadValue();
+        Debug.Log(mousePosition);
     }
 }
 

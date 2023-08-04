@@ -7,12 +7,9 @@ public class BodyStateManager : MonoBehaviour
 
     public BodyBaseControlState currentState;
     public HeadControlState headState = new HeadControlState();
-    public RightHandControlState rightHandState = new RightHandControlState();
+    public RightHandControlState rightHandState;
     public LeftHandControlState leftHandState = new LeftHandControlState();
     public IHandPart IHandHolder;
-
-    public float mouseY;
-    public float mouseX;
 
     public Transform cameraTransform;
     public InputSettings inputSettings;
@@ -34,6 +31,9 @@ public class BodyStateManager : MonoBehaviour
     private void Awake()
     {
         inputSettings = gameObject.GetComponent<InputSettings>();
+        rightHandState = new RightHandControlState(this);
+        
+    
     }
 
     private void Start()
@@ -44,18 +44,18 @@ public class BodyStateManager : MonoBehaviour
         switchState(headState);
     }
 
-    public void currentStateUptade(float x, float y)
+    public void currentStateUptade(float x, float z)
     {
-        currentState.UptadeState(x, y);
+        currentState.UptadeState(x, z);
     }
 
     public void enterRightHandState()
     {
-        enterHandState(ref rightStateOn, rightHandState);
+        enterEscapeHandState(rightStateOn, rightHandState);
     }
     public void enterLeftHandState()
     {
-        enterHandState(ref leftStateOn, leftHandState);
+        enterEscapeHandState(leftStateOn, leftHandState);
     }
 
     public void HoldObject()
@@ -68,47 +68,39 @@ public class BodyStateManager : MonoBehaviour
 
     public void RotateHand()
     {
-        if (!rightStateOn && !leftStateOn)
-            return;
-        
         rotateHand = rotateHand ? false : true;
 
         if(IHandHolder != null)
             IHandHolder.isHandRotate(rotateHand);
     }
 
-    public void changeHandAltitude(float x)
+    public void changeHandAltitude(float y)
     {
         if (IHandHolder != null)
-            IHandHolder.changeHandAltitude(x);
+            IHandHolder.changeHandAltitude(y);
     }
 
-    private void enterHandState(ref bool handStateBool,BodyBaseControlState whichHandState)
+    private void enterEscapeHandState(bool handStateBool,BodyBaseControlState whichHandState)
     {
-        Debug.Log(handStateBool);
         if (handStateBool)// exit left hand state and switch to headState
         {
-            Debug.Log("ahhh");
-            handStateBool = false;
             switchState(headState);
-            IHandHolder = null;
+            IHandHolder.offHand(this);
         }
         else// enter "whichHandState" hand state 
         {
-            Debug.Log("uhhh");
-            handStateBool = true;
+            if (IHandHolder != null)
+                IHandHolder.offHand(this);
+            
             switchState(whichHandState);
             IHandHolder = whichHandState as IHandPart;
         }
-        Debug.Log(handStateBool);
     }
 
     private void switchState(BodyBaseControlState bodyBaseState)
     {
         currentState = bodyBaseState;
         currentState.EnterState(this);
-
-
     }
     
 

@@ -11,7 +11,7 @@ public class LeftHandControlState : BodyBaseControlState
 
     public override void UptadeState(float mouseX, float mouseY)
     {
-
+        Debug.Log("uhhhhhh");
     }
 }
 

@@ -14,6 +14,8 @@ public class InputController : MonoBehaviour
     [SerializeField]
     private UnityEvent onRightHandOnOFF;
     [SerializeField]
+    private UnityEvent onLeftHandOnOFF;
+    [SerializeField]
     private UnityEvent onHold;
     [SerializeField]
     private UnityEvent onRotateHand;
@@ -30,6 +32,7 @@ public class InputController : MonoBehaviour
         controls.Player.Enable();
         controls.Player.MouseDelta.performed += MouseDelta;
         controls.Player.RightHandOnOff.performed += ctx =>RightHandOnOff();
+        controls.Player.LeftHandOnOff.performed += ctx => LeftHandOnOff();
         controls.Player.Hold.started += Hold;
         controls.Player.Hold.canceled += Hold;
         controls.Player.RotateHand.started += ctx => RotateHand();
@@ -43,8 +46,9 @@ public class InputController : MonoBehaviour
         controls.Player.Disable();
         controls.Player.MouseDelta.performed -= MouseDelta;
         controls.Player.RightHandOnOff.performed -= ctx => RightHandOnOff();
+        controls.Player.LeftHandOnOff.performed -= ctx => LeftHandOnOff();
         controls.Player.Hold.started -= Hold;
-        controls.Player.Hold.canceled += Hold;
+        controls.Player.Hold.canceled -= Hold;
         controls.Player.RotateHand.started -= ctx => RotateHand();
         controls.Player.RotateHand.canceled -= ctx => RotateHand();
         controls.Player.HandAltitude.performed -= ChangeHandAltitude;
@@ -53,6 +57,10 @@ public class InputController : MonoBehaviour
     public void RightHandOnOff()
     {
         onRightHandOnOFF?.Invoke();
+    }
+    public void LeftHandOnOff()
+    {
+        onLeftHandOnOFF?.Invoke();
     }
 
     public void MouseDelta(InputAction.CallbackContext context)

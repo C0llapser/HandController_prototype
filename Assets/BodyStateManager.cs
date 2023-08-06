@@ -8,7 +8,7 @@ public class BodyStateManager : MonoBehaviour
     public BodyBaseControlState currentState;
     public HeadControlState headState = new HeadControlState();
     public RightHandControlState rightHandState;
-    public LeftHandControlState leftHandState = new LeftHandControlState();
+    public LeftHandControlState leftHandState;
     public IHandPart IHandHolder;
 
     public Transform cameraTransform;
@@ -17,14 +17,11 @@ public class BodyStateManager : MonoBehaviour
     public Transform rightHandTarget;
     public Transform rightHandOrigin;
     public bool rightStateOn;
-    public bool rightHandHoldObject;
+    
 
     public Transform leftHandTarget;
     public Transform leftHandOrigin;
     public bool leftStateOn;
-    public bool leftHandHoldObject;
-
-    public bool isHolding;
 
     public bool rotateHand;
 
@@ -32,7 +29,7 @@ public class BodyStateManager : MonoBehaviour
     {
         inputSettings = gameObject.GetComponent<InputSettings>();
         rightHandState = new RightHandControlState(this);
-        
+        leftHandState = new LeftHandControlState(this);
     
     }
 
@@ -60,10 +57,10 @@ public class BodyStateManager : MonoBehaviour
 
     public void HoldObject()
     {
-        if (!rightStateOn && !leftStateOn)
+        if (IHandHolder == null)
             return;
 
-        Debug.Log("trzymaj");
+        IHandHolder.pickDropObject(this);
     }
 
     public void RotateHand()

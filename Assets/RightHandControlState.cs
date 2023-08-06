@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RightHandControlState : BodyBaseControlState, IHandPart
@@ -10,16 +8,19 @@ public class RightHandControlState : BodyBaseControlState, IHandPart
     private float positionX;
     private float positionY;
     private float rotationX;
-    private float rotationY;
+    private float rotationZ;
     private bool isRotate;
     
     private InputSettings inputSettings;
 
     private Vector2 clampAxisX;
     private Vector2 clampAxisZ;
+    private Vector2 clampRotationX;
+    private Vector2 clampRotationZ;
 
     float handSensitivityAxisX;
     float handSensitivityAxisZ;
+    float handAltitudeSensitivity;
 
     public RightHandControlState(BodyStateManager bodyStateManager)
     {
@@ -29,9 +30,11 @@ public class RightHandControlState : BodyBaseControlState, IHandPart
 
         clampAxisX = inputSettings.rightHandAxisClampX;
         clampAxisZ = inputSettings.rightHandAxisClampZ;
-
+        clampRotationX = inputSettings.rightHandRotationClampX;
+        clampRotationZ = inputSettings.rightHandRotationClampZ;
         handSensitivityAxisX = inputSettings.rightHandSensitivityAxisX;
         handSensitivityAxisZ = inputSettings.rightHandSensitivityAxisZ;
+        handAltitudeSensitivity = inputSettings.HandAltitudeSensitivity;
     }
 
     public override void EnterState(BodyStateManager bodyStateManager)
@@ -54,11 +57,11 @@ public class RightHandControlState : BodyBaseControlState, IHandPart
         else// rotate hand
         {
             rotationX += mouseX * 0.1f;
-            rotationY += mouseZ * 0.1f;
-            ////rotationX = Mathf.Clamp(rotationX,-70,70);
-            ////rotationY = Mathf.Clamp(rotationY, 10,-180);
-            Debug.Log(handTarget.eulerAngles);
-            handTarget.localEulerAngles = new Vector3(0,rotationY,rotationX);
+            rotationZ += mouseZ * 0.1f;
+            rotationX = Mathf.Clamp(rotationX, clampRotationX.x, clampRotationX.y);
+            rotationZ = Mathf.Clamp(rotationZ, clampRotationZ.x, clampRotationZ.y);
+            
+            handTarget.localEulerAngles = new Vector3(rotationZ,0,rotationX);
         }
     }
 
@@ -69,7 +72,7 @@ public class RightHandControlState : BodyBaseControlState, IHandPart
 
     public void changeHandAltitude(float value)
     {
-        positionY +=value * 0.1f * 0.01f;
+        positionY +=value * handAltitudeSensitivity * 0.01f;
 
         handTarget.transform.localPosition = new Vector3(positionX,positionY,positionZ);
     }
@@ -78,5 +81,30 @@ public class RightHandControlState : BodyBaseControlState, IHandPart
     {
         bodyStateManager.rightStateOn = false;
         bodyStateManager.IHandHolder = null;
+    }
+
+    public void pickDropObject(BodyStateManager bodyStateManager)
+    {
+
+        if (bodyStateManager.rightHandHoldObject)
+        {
+            pickUpObject(ref bodyStateManager.rightHandHoldObject);
+            Debug.Log(bodyStateManager.rightHandHoldObject);
+        }
+        else
+            dropObject(ref bodyStateManager.rightHandHoldObject);
+
+        Debug.Log(bodyStateManager.rightHandHoldObject);
+    }
+
+    public void pickUpObject(ref bool isHolding)
+    {
+        isHolding = true;
+    }
+
+    public void dropObject(ref bool isHolding)
+    {
+        Debug.Log("spuszczam");
+        isHolding = false;
     }
 }

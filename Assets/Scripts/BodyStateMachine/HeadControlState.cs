@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HeadControlState : BodyBaseControlState
@@ -24,6 +22,7 @@ public class HeadControlState : BodyBaseControlState
         
     }
 
+    //Just basic camera movement
     public override void UptadeState(float mouseX, float mouseY)
     {
         camVertical += Mathf.Clamp(mouseX * inputSettings.cameraSensitivity * Time.deltaTime,camHorizontalClamp.x, camHorizontalClamp.y);

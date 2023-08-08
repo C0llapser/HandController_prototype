@@ -10,9 +10,9 @@ public interface IHandPart
 
     void pickDropObject(BodyStateManager bodyStateManager);
 
-    void pickUpObject(ref bool isHolding);
+    void pickUpObject();
 
-    void dropObject(ref bool isHolding);
+    void dropObject();
 
     void offHand(BodyStateManager bodyStateManager);
 

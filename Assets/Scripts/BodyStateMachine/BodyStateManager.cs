@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+
 public class BodyStateManager : MonoBehaviour
 {
 
@@ -11,17 +9,22 @@ public class BodyStateManager : MonoBehaviour
     public LeftHandControlState leftHandState;
     public IHandPart IHandHolder;
 
+
     public Transform cameraTransform;
     public InputSettings inputSettings;
 
     public Transform rightHandTarget;
     public Transform rightHandOrigin;
+    public Transform rightHandpickUpRayOrigin;
     public bool rightStateOn;
     
 
     public Transform leftHandTarget;
     public Transform leftHandOrigin;
+    public Transform leftHandpickUpRayOrigin;
     public bool leftStateOn;
+
+
 
     public bool rotateHand;
 
@@ -30,7 +33,6 @@ public class BodyStateManager : MonoBehaviour
         inputSettings = gameObject.GetComponent<InputSettings>();
         rightHandState = new RightHandControlState(this);
         leftHandState = new LeftHandControlState(this);
-    
     }
 
     private void Start()
@@ -41,11 +43,13 @@ public class BodyStateManager : MonoBehaviour
         switchState(headState);
     }
 
+    //Event when mouse moves
     public void currentStateUptade(float x, float z)
     {
         currentState.UptadeState(x, z);
     }
 
+    
     public void enterRightHandState()
     {
         enterEscapeHandState(rightStateOn, rightHandState);
@@ -54,6 +58,7 @@ public class BodyStateManager : MonoBehaviour
     {
         enterEscapeHandState(leftStateOn, leftHandState);
     }
+
 
     public void HoldObject()
     {
@@ -79,7 +84,7 @@ public class BodyStateManager : MonoBehaviour
 
     private void enterEscapeHandState(bool handStateBool,BodyBaseControlState whichHandState)
     {
-        if (handStateBool)// exit left hand state and switch to headState
+        if (handStateBool)// escape hand state and switch to headState
         {
             switchState(headState);
             IHandHolder.offHand(this);

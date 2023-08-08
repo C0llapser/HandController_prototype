@@ -8,7 +8,8 @@ public class InputSettings : MonoBehaviour
     public Vector2 cameraHorizontalClamp;
     public Vector2 cameraVerticalClamp;
     #endregion
-    
+
+    #region hand 
     public float rightHandSensitivityAxisX;
     public float rightHandSensitivityAxisZ;
     
@@ -24,4 +25,5 @@ public class InputSettings : MonoBehaviour
     public Vector2 leftHandAxisClampZ;
 
     public float HandAltitudeSensitivity;
+    #endregion
 }

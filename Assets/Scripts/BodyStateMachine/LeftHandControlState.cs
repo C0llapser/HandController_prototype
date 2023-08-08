@@ -6,6 +6,7 @@ public class LeftHandControlState : BodyBaseControlState, IHandPart
 {
     private Transform originPosition;
     private Transform handTarget;
+    private Transform pickUpRayOrigin;
     private float positionZ;
     private float positionX;
     private float positionY;
@@ -24,12 +25,18 @@ public class LeftHandControlState : BodyBaseControlState, IHandPart
     float handSensitivityAxisZ;
     float handAltitudeSensitivity;
 
+    IPickable pickUp;
+    bool isHandHoldingObject;
+
     public LeftHandControlState(BodyStateManager bodyStateManager)
     {
         originPosition = bodyStateManager.leftHandOrigin;
         handTarget = bodyStateManager.leftHandTarget;
         inputSettings = bodyStateManager.inputSettings;
 
+        pickUpRayOrigin = bodyStateManager.leftHandpickUpRayOrigin;
+
+        //loading settings(from script not file ?file maybe latter?)
         clampAxisX = inputSettings.rightHandAxisClampX;
         clampAxisZ = inputSettings.rightHandAxisClampZ;
         clampRotationX = inputSettings.rightHandRotationClampX;
@@ -87,16 +94,33 @@ public class LeftHandControlState : BodyBaseControlState, IHandPart
 
     public void pickDropObject(BodyStateManager bodyStateManager)
     {
-        throw new System.NotImplementedException();
+        if (isHandHoldingObject)//if hand doesnt hold anything
+        {
+            dropObject();
+        }
+        else//if hand hold something
+            pickUpObject();
     }
 
-    public void pickUpObject(ref bool isHolding)
+    public void pickUpObject()
     {
-        throw new System.NotImplementedException();
+        Ray pickUpRay = new Ray(pickUpRayOrigin.position, pickUpRayOrigin.forward);
+
+        if (Physics.Raycast(pickUpRay, out RaycastHit hitInfo, 0.7f))
+        {
+
+            if ((pickUp = hitInfo.collider.gameObject.GetComponent<IPickable>()) != null)
+            {
+                pickUp.pickUp(pickUpRayOrigin);
+                isHandHoldingObject = true;
+            }
+        }
     }
 
-    public void dropObject(ref bool isHolding)
+    public void dropObject()
     {
-        throw new System.NotImplementedException();
+        pickUp.drop();
+        pickUp = null;
+        isHandHoldingObject = false;
     }
 }

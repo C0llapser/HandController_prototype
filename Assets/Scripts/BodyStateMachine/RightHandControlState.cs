@@ -4,6 +4,7 @@ public class RightHandControlState : BodyBaseControlState, IHandPart
 {
     private Transform originPosition;
     private Transform handTarget;
+    private Transform pickUpRayOrigin;
     private float positionZ;
     private float positionX;
     private float positionY;
@@ -12,7 +13,7 @@ public class RightHandControlState : BodyBaseControlState, IHandPart
     private bool isRotate;
     
     private InputSettings inputSettings;
-
+    
     private Vector2 clampAxisX;
     private Vector2 clampAxisZ;
     private Vector2 clampRotationX;
@@ -22,11 +23,17 @@ public class RightHandControlState : BodyBaseControlState, IHandPart
     float handSensitivityAxisZ;
     float handAltitudeSensitivity;
 
+    IPickable pickUp;
+    bool isHandHoldingObject;
+
+
     public RightHandControlState(BodyStateManager bodyStateManager)
     {
         originPosition = bodyStateManager.rightHandOrigin;
         handTarget = bodyStateManager.rightHandTarget;
         inputSettings = bodyStateManager.inputSettings;
+        
+        pickUpRayOrigin = bodyStateManager.rightHandpickUpRayOrigin;
 
         clampAxisX = inputSettings.rightHandAxisClampX;
         clampAxisZ = inputSettings.rightHandAxisClampZ;
@@ -85,26 +92,34 @@ public class RightHandControlState : BodyBaseControlState, IHandPart
 
     public void pickDropObject(BodyStateManager bodyStateManager)
     {
-
-        if (bodyStateManager.rightHandHoldObject)
+        if (isHandHoldingObject)//if hand doesnt hold anything
         {
-            pickUpObject(ref bodyStateManager.rightHandHoldObject);
-            Debug.Log(bodyStateManager.rightHandHoldObject);
+            dropObject();
         }
-        else
-            dropObject(ref bodyStateManager.rightHandHoldObject);
-
-        Debug.Log(bodyStateManager.rightHandHoldObject);
+        else//if hand hold something
+            pickUpObject();   
     }
 
-    public void pickUpObject(ref bool isHolding)
+    public void pickUpObject()
     {
-        isHolding = true;
+        Ray pickUpRay = new Ray(pickUpRayOrigin.position, pickUpRayOrigin.forward);
+
+        if (Physics.Raycast(pickUpRay, out RaycastHit hitInfo, 0.7f))
+        {
+            
+            if ((pickUp = hitInfo.collider.gameObject.GetComponent<IPickable>())!=null)
+            {
+                pickUp.pickUp(pickUpRayOrigin);
+                isHandHoldingObject= true;
+            }
+        }
+        
     }
 
-    public void dropObject(ref bool isHolding)
+    public void dropObject()
     {
-        Debug.Log("spuszczam");
-        isHolding = false;
+        pickUp.drop();
+        pickUp = null;
+        isHandHoldingObject = false;
     }
 }

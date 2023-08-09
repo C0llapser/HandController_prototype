@@ -3,16 +3,16 @@ Simple game mechanics that allow the player to accurately control limbs done in 
 
 ![ezgif com-video-to-gif](https://github.com/C0llapser/HandController_prototype/assets/139387546/c2a0a2af-d152-45b0-9095-dd3c33e8b6aa)
 
-##Features 
+## Features 
 
-Project uses a new input system. 
-Animation Rigging package used.
+Project uses a new input system.  
+Animation Rigging package used.  
 
-##Controlls 
+## Controlls 
 
-Mouse - looking around
-E - ON/OF right hand state
-Q - ON/OF left hand state 
-Scroll - Changing hand altitude
-LMB - Object holding
-RMB - Rotate of the hand 
+Mouse - looking around  
+E - ON/OF right hand state  
+Q - ON/OF left hand state  
+Scroll - Changing hand altitude  
+LMB - Object holding   
+RMB - Rotate of the hand   

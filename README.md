@@ -11,8 +11,8 @@ Animation Rigging package used.
 ## Controlls 
 
 Mouse - looking around  
-E - ON/OF right hand state  
-Q - ON/OF left hand state  
+E - ON/OFF right hand state  
+Q - ON/OFF left hand state  
 Scroll - Changing hand altitude  
 LMB - Object holding   
 RMB - Rotate of the hand   

@@ -4,16 +4,16 @@ public interface IHandPart
 {
    
     
-    void isHandRotate(bool setIsRotate);
+    void IsHandRotate(bool setIsRotate);
 
-    void changeHandAltitude(float value);
+    void ChangeHandAltitude(float value);
 
-    void pickDropObject(BodyStateManager bodyStateManager);
+    void PickDropObject(BodyStateManager bodyStateManager);
 
-    void pickUpObject();
+    void PickUpObject();
 
-    void dropObject();
+    void DropObject();
 
-    void offHand(BodyStateManager bodyStateManager);
+    void OffHand(BodyStateManager bodyStateManager);
 
 }

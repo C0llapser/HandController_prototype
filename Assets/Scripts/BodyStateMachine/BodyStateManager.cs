@@ -40,23 +40,23 @@ public class BodyStateManager : MonoBehaviour
         rightStateOn = false;
         leftStateOn = false;
         rotateHand = false;
-        switchState(headState);
+        SwitchState(headState);
     }
 
     //Event when mouse moves
-    public void currentStateUptade(float x, float z)
+    public void CurrentStateUptade(float x, float z)
     {
         currentState.UptadeState(x, z);
     }
 
     
-    public void enterRightHandState()
+    public void EnterRightHandState()
     {
-        enterEscapeHandState(rightStateOn, rightHandState);
+        EnterEscapeHandState(rightStateOn, rightHandState);
     }
-    public void enterLeftHandState()
+    public void EnterLeftHandState()
     {
-        enterEscapeHandState(leftStateOn, leftHandState);
+        EnterEscapeHandState(leftStateOn, leftHandState);
     }
 
 
@@ -65,7 +65,7 @@ public class BodyStateManager : MonoBehaviour
         if (IHandHolder == null)
             return;
 
-        IHandHolder.pickDropObject(this);
+        IHandHolder.PickDropObject(this);
     }
 
     public void RotateHand()
@@ -73,33 +73,33 @@ public class BodyStateManager : MonoBehaviour
         rotateHand = rotateHand ? false : true;
 
         if(IHandHolder != null)
-            IHandHolder.isHandRotate(rotateHand);
+            IHandHolder.IsHandRotate(rotateHand);
     }
 
-    public void changeHandAltitude(float y)
+    public void ChangeHandAltitude(float y)
     {
         if (IHandHolder != null)
-            IHandHolder.changeHandAltitude(y);
+            IHandHolder.ChangeHandAltitude(y);
     }
 
-    private void enterEscapeHandState(bool handStateBool,BodyBaseControlState whichHandState)
+    private void EnterEscapeHandState(bool handStateBool,BodyBaseControlState whichHandState)
     {
         if (handStateBool)// escape hand state and switch to headState
         {
-            switchState(headState);
-            IHandHolder.offHand(this);
+            SwitchState(headState);
+            IHandHolder.OffHand(this);
         }
         else// enter "whichHandState" hand state 
         {
             if (IHandHolder != null)
-                IHandHolder.offHand(this);
+                IHandHolder.OffHand(this);
             
-            switchState(whichHandState);
+            SwitchState(whichHandState);
             IHandHolder = whichHandState as IHandPart;
         }
     }
 
-    private void switchState(BodyBaseControlState bodyBaseState)
+    private void SwitchState(BodyBaseControlState bodyBaseState)
     {
         currentState = bodyBaseState;
         currentState.EnterState(this);

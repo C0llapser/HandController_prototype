@@ -8,7 +8,7 @@ public class PickableObject : MonoBehaviour, IPickable
        rb = GetComponent<Rigidbody>();
     }
     
-    public void drop()
+    public void Drop()
     {
         
         gameObject.transform.parent = null;
@@ -16,7 +16,7 @@ public class PickableObject : MonoBehaviour, IPickable
         //rb.detectCollisions = true;
     }
 
-    public void pickUp(Transform transform)
+    public void PickUp(Transform transform)
     {
         
         gameObject.transform.parent = transform;

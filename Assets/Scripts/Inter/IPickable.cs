@@ -2,7 +2,7 @@ using UnityEngine;
 
 public interface IPickable 
 {
-    void pickUp(Transform transform);
+    void PickUp(Transform transform);
 
-    void drop();
+    void Drop();
 }

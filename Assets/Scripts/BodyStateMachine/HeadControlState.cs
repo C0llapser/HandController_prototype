@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HeadControlState : BodyBaseControlState
 {
-    Transform cameraTransfrom;
+    private Transform cameraTransfrom;
     
     private float camHorizontal;
     private float camVertical;
@@ -11,7 +11,7 @@ public class HeadControlState : BodyBaseControlState
     private Vector2 camVerticalClamp;
 
 
-    InputSettings inputSettings;
+    private InputSettings inputSettings;
     
     public override void EnterState(BodyStateManager bodyStateManager) 
     {

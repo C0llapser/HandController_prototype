@@ -19,12 +19,12 @@ public class RightHandControlState : BodyBaseControlState, IHandPart
     private Vector2 clampRotationX;
     private Vector2 clampRotationZ;
 
-    float handSensitivityAxisX;
-    float handSensitivityAxisZ;
-    float handAltitudeSensitivity;
+    private float handSensitivityAxisX;
+    private float handSensitivityAxisZ;
+    private float handAltitudeSensitivity;
 
-    IPickable pickUp;
-    bool isHandHoldingObject;
+    private IPickable pickUp;
+    private bool isHandHoldingObject;
 
 
     public RightHandControlState(BodyStateManager bodyStateManager)
@@ -72,35 +72,35 @@ public class RightHandControlState : BodyBaseControlState, IHandPart
         }
     }
 
-    public void isHandRotate(bool setIsRotate)
+    public void IsHandRotate(bool setIsRotate)
     {
         isRotate= setIsRotate;        
     }
 
-    public void changeHandAltitude(float value)
+    public void ChangeHandAltitude(float value)
     {
         positionY +=value * handAltitudeSensitivity * 0.01f;
 
         handTarget.transform.localPosition = new Vector3(positionX,positionY,positionZ);
     }
 
-    public void offHand(BodyStateManager bodyStateManager)
+    public void OffHand(BodyStateManager bodyStateManager)
     {
         bodyStateManager.rightStateOn = false;
         bodyStateManager.IHandHolder = null;
     }
 
-    public void pickDropObject(BodyStateManager bodyStateManager)
+    public void PickDropObject(BodyStateManager bodyStateManager)
     {
         if (isHandHoldingObject)//if hand doesnt hold anything
         {
-            dropObject();
+            DropObject();
         }
         else//if hand hold something
-            pickUpObject();   
+            PickUpObject();   
     }
 
-    public void pickUpObject()
+    public void PickUpObject()
     {
         Ray pickUpRay = new Ray(pickUpRayOrigin.position, pickUpRayOrigin.forward);
 
@@ -109,16 +109,16 @@ public class RightHandControlState : BodyBaseControlState, IHandPart
             
             if ((pickUp = hitInfo.collider.gameObject.GetComponent<IPickable>())!=null)
             {
-                pickUp.pickUp(pickUpRayOrigin);
+                pickUp.PickUp(pickUpRayOrigin);
                 isHandHoldingObject= true;
             }
         }
         
     }
 
-    public void dropObject()
+    public void DropObject()
     {
-        pickUp.drop();
+        pickUp.Drop();
         pickUp = null;
         isHandHoldingObject = false;
     }

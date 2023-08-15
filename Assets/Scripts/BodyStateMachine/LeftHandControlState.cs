@@ -26,7 +26,6 @@ public class LeftHandControlState : BodyBaseControlState, IHandPart
     private float handAltitudeSensitivity;
 
     private IPickable pickUp;
-    private bool isHandHoldingObject;
 
     public LeftHandControlState(BodyStateManager bodyStateManager)
     {
@@ -92,16 +91,6 @@ public class LeftHandControlState : BodyBaseControlState, IHandPart
         bodyStateManager.IHandHolder = null;
     }
 
-    public void PickDropObject(BodyStateManager bodyStateManager)
-    {
-        if (isHandHoldingObject)//if hand doesnt hold anything
-        {
-            DropObject();
-        }
-        else//if hand hold something
-            PickUpObject();
-    }
-
     public void PickUpObject()
     {
         Ray pickUpRay = new Ray(pickUpRayOrigin.position, pickUpRayOrigin.forward);
@@ -112,15 +101,16 @@ public class LeftHandControlState : BodyBaseControlState, IHandPart
             if ((pickUp = hitInfo.collider.gameObject.GetComponent<IPickable>()) != null)
             {
                 pickUp.PickUp(pickUpRayOrigin);
-                isHandHoldingObject = true;
             }
         }
     }
 
     public void DropObject()
     {
-        pickUp.Drop();
-        pickUp = null;
-        isHandHoldingObject = false;
+        if (pickUp != null)
+        {
+            pickUp.Drop();
+            pickUp = null;
+        }
     }
 }

@@ -24,7 +24,6 @@ public class RightHandControlState : BodyBaseControlState, IHandPart
     private float handAltitudeSensitivity;
 
     private IPickable pickUp;
-    private bool isHandHoldingObject;
 
 
     public RightHandControlState(BodyStateManager bodyStateManager)
@@ -90,18 +89,10 @@ public class RightHandControlState : BodyBaseControlState, IHandPart
         bodyStateManager.IHandHolder = null;
     }
 
-    public void PickDropObject(BodyStateManager bodyStateManager)
-    {
-        if (isHandHoldingObject)//if hand doesnt hold anything
-        {
-            DropObject();
-        }
-        else//if hand hold something
-            PickUpObject();   
-    }
-
     public void PickUpObject()
     {
+        if (pickUp != null)
+            return;
         Ray pickUpRay = new Ray(pickUpRayOrigin.position, pickUpRayOrigin.forward);
 
         if (Physics.Raycast(pickUpRay, out RaycastHit hitInfo, 0.7f))
@@ -110,7 +101,6 @@ public class RightHandControlState : BodyBaseControlState, IHandPart
             if ((pickUp = hitInfo.collider.gameObject.GetComponent<IPickable>())!=null)
             {
                 pickUp.PickUp(pickUpRayOrigin);
-                isHandHoldingObject= true;
             }
         }
         
@@ -118,8 +108,10 @@ public class RightHandControlState : BodyBaseControlState, IHandPart
 
     public void DropObject()
     {
-        pickUp.Drop();
-        pickUp = null;
-        isHandHoldingObject = false;
+        if (pickUp != null)
+        { 
+            pickUp.Drop();
+            pickUp = null;
+        }
     }
 }

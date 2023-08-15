@@ -8,8 +8,6 @@ public interface IHandPart
 
     void ChangeHandAltitude(float value);
 
-    void PickDropObject(BodyStateManager bodyStateManager);
-
     void PickUpObject();
 
     void DropObject();

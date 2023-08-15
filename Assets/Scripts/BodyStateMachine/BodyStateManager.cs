@@ -17,7 +17,7 @@ public class BodyStateManager : MonoBehaviour
     public Transform rightHandOrigin;
     public Transform rightHandpickUpRayOrigin;
     public bool rightStateOn;
-    
+
 
     public Transform leftHandTarget;
     public Transform leftHandOrigin;
@@ -49,7 +49,7 @@ public class BodyStateManager : MonoBehaviour
         currentState.UptadeState(x, z);
     }
 
-    
+
     public void EnterRightHandState()
     {
         EnterEscapeHandState(rightStateOn, rightHandState);
@@ -60,12 +60,22 @@ public class BodyStateManager : MonoBehaviour
     }
 
 
-    public void HoldObject()
+    public void PickUpObject()
     {
         if (IHandHolder == null)
             return;
 
-        IHandHolder.PickDropObject(this);
+        IHandHolder.PickUpObject();
+        Debug.Log("biere");
+    }
+
+    public void DropObject()
+    {
+        if (IHandHolder == null)
+            return;
+
+        IHandHolder.DropObject();
+        Debug.Log("Puszczam");
     }
 
     public void RotateHand()
